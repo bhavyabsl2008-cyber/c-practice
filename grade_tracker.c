@@ -1,40 +1,50 @@
 #include <stdio.h>
-int main(){
-    int n;
-    printf("Enter the number of subjects: ");
-    scanf("%d",&n);
 
-    float marks[n];
-     
-    for(int i=0;i<n;i++)
-    {
-        printf("Enter marks for subject %d: ", i+1);
-        scanf("%f",&marks[i]);
+void getMarks(float marks[], int n) {
+    for (int i = 0; i < n; i++){
+        printf("Enter marks for subject %d; ",i+1);
+        scanf("%f", &marks[i]);
     }
-    for(int i=0;i<n;i++)
-    {
-        printf("Subject %d: %.2f\n", i+1, marks[i]);
-    }
-    float sum = 0;
-    for(int i = 0;i<n;i++){
-        sum += marks[i];
-
-    }
-    float average = sum/n;
-    printf("\nAverage Marks: %.2f\n",average);
-
-    char grade;
-    if (average >= 90)      grade = 'A';
-    else if (average >= 75) grade = 'B';
-    else if (average >= 60) grade = 'C';
-    else if (average >= 40) grade = 'D';
-    else                    grade = 'F';
-
-    printf("Grade: %c\n",grade);
-
-
-
-    return 0;
 }
 
+float calcAverage(float marks[], int n) {
+    float sum = 0;
+    for (int i = 0; i < n; i++) {
+        sum += marks[i];
+    }
+    return sum/n;
+}
+    char getGrade(float average){
+        if (average >= 90)
+            return 'A';
+        else if (average >= 75)
+            return 'B';
+        else if (average >= 60)
+            return 'C';
+        else if (average >= 40)
+            return 'D';
+        else
+            return 'F';
+    }
+    void printReport(float marks[], int n, float average, char grade){
+        printf("\n-- Report Card --\n");
+        for (int i = 0; i < n; i++) {
+            printf("Subject %d: %.2f\n",i+1, marks[i]);
 
+    }
+    printf("Average: %.2f\n", average);
+    printf("Grade:   %c\n", grade);
+}
+int main() {
+    int n;
+    printf("Enter number of subjects: ");
+    scanf("%d", &n);
+
+    float marks[n];
+
+    getMarks(marks, n);
+    float average= calcAverage(marks, n);
+    char grade = getGrade(average);
+    printReport(marks, n, average, grade);
+    return 0;
+}
