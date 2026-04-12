@@ -1,4 +1,11 @@
 #include <stdio.h>
+struct Student {
+    char name[50];
+    float marks[10];
+    int numSubjects;
+    float average;
+    char grade;
+};
 
 void getMarks(float marks[], int n) {
     for (int i = 0; i < n; i++){
@@ -26,8 +33,8 @@ float calcAverage(float marks[], int n) {
         else
             return 'F';
     }
-    void printReport(float marks[], int n, float average, char grade){
-        printf("\n-- Report Card --\n");
+    void printReport(char name[], float marks[], int n, float average, char grade){
+printf("\n-- Report Card: %s --\n", name);
         for (int i = 0; i < n; i++) {
             printf("Subject %d: %.2f\n",i+1, marks[i]);
 
@@ -36,15 +43,15 @@ float calcAverage(float marks[], int n) {
     printf("Grade:   %c\n", grade);
 }
 int main() {
-    int n;
-    printf("Enter number of subjects: ");
-    scanf("%d", &n);
+    struct Student s;
+printf("Enter student name: ");
+scanf("%s", s.name);
+printf("Enter number of subjects: ");
+scanf("%d", &s.numSubjects);
+    float marks[s.numSubjects];
 
-    float marks[n];
-
-    getMarks(marks, n);
-    float average= calcAverage(marks, n);
-    char grade = getGrade(average);
-    printReport(marks, n, average, grade);
-    return 0;
+    getMarks(s.marks, s.numSubjects);
+s.average = calcAverage(s.marks, s.numSubjects);
+s.grade = getGrade(s.average);
+printReport(s.name, s.marks, s.numSubjects, s.average, s.grade);
 }
