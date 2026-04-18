@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Grade Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 500px;
+            margin: 40px auto;
+            background: #f0f4f8;
+            padding: 20px;
+        }
+        h1 {
+            color: #2d3748;
+            text-align: center;
+        }
+        .input-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 16px;
+            background: #4299e1;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover { background: #3182ce; }
+        #marks-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        .mark-badge {
+            background: white;
+            border: 1px solid #bee3f8;
+            color: #2b6cb0;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        #result {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            display: none;
+        }
+        #grade-display {
+            font-size: 64px;
+            font-weight: bold;
+            color: #4299e1;
+        }
+        #average-display {
+            font-size: 18px;
+            color: #718096;
+            margin-top: 8px;
+        }
+        #calculate-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            background: #48bb78;
+            margin-bottom: 12px;
+        }
+        #calculate-btn:hover { background: #38a169; }
+        #reset-btn {
+            width: 100%;
+            padding: 10px;
+            background: #fc8181;
+            font-size: 14px;
+        }
+        #reset-btn:hover { background: #f56565; }
+    </style>
+</head>
+<body>
+    <h1>Grade Tracker</h1>
+
+    <div class="input-row">
+        <input type="number" id="marks" placeholder="Enter marks (0-100)">
+        <button onclick="addMark()">Add</button>
+    </div>
+
+    <div id="marks-list"></div>
+
+    <button id="calculate-btn" onclick="calculate()">Calculate Grade</button>
+    <button id="reset-btn" onclick="reset()">Reset</button>
+
+    <div id="result">
+        <div id="grade-display"></div>
+        <div id="average-display"></div>
+    </div>
+
+    <script>
+        let marks = [];
+
+        function addMark() {
+            let value = Number(document.getElementById("marks").value);
+            if (value < 0 || value > 100 || isNaN(value)) {
+                alert("Enter valid marks between 0 and 100!");
+                return;
+            }
+            marks.push(value);
+            document.getElementById("marks").value = "";
+
+            let list = document.getElementById("marks-list");
+            list.innerHTML = "";
+            marks.forEach((m, i) => {
+                list.innerHTML += `<span class="mark-badge">Subject ${i+1}: ${m}</span>`;
+            });
+        }
+
+        function calculate() {
+            if (marks.length === 0) {
+                alert("Add some marks first!");
+                return;
+            }
+            let sum = 0;
+            for (let i = 0; i < marks.length; i++) sum += marks[i];
+            let average = sum / marks.length;
+
+            let grade;
+            if (average >= 90) grade = "A";
+            else if (average >= 75) grade = "B";
+            else if (average >= 60) grade = "C";
+            else if (average >= 40) grade = "D";
+            else grade = "F";
+
+            document.getElementById("result").style.display = "block";
+            document.getElementById("grade-display").innerText = grade;
+            document.getElementById("average-display").innerText = "Average: " + average.toFixed(2) + "%";
+        }
+
+        function reset() {
+            marks = [];
+            document.getElementById("marks-list").innerHTML = "";
+            document.getElementById("result").style.display = "none";
+            document.getElementById("marks").value = "";
+        }
+    </script>
+</body>
+</html>
