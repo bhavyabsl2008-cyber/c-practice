@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f0f4ff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+    }
+    #quiz-container {
+        background: white;
+        padding: 40px;
+        border-radius: 16px;
+        width: 500px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    h1 { color: #1a1a2e; text-align: center; }
+    #question { font-size: 18px; margin: 20px 0; font-weight: 500; }
+    #options { display: flex; flex-direction: column; gap: 10px; }
+    #options button {
+        padding: 12px 16px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        background: white;
+        font-size: 15px;
+        cursor: pointer;
+        text-align: left;
+    }
+    #options button:hover { background: #f0f4ff; border-color: #185FA5; }
+    #feedback { margin-top: 16px; font-size: 16px; font-weight: 500; min-height: 24px; }
+    #score { margin-top: 12px; color: #666; font-size: 14px; }
+</style>
+        <title>CS Quiz</title>
+    </head>
+<html>
+<body>
+    <div id="quiz-container">
+        <h1>CS Quiz</h1>
+
+        <div id="question">Question will appear here</div>
+
+        <div id="options">
+            <button onclick="checkAnswer(0)"></button>
+            <button onclick="checkAnswer(1)"></button>
+            <button onclick="checkAnswer(2)"></button>
+            <button onclick="checkAnswer(3)"></button>
+        </div>
+
+        <div id="feedback"></div>
+        <div id="score">Score: 0</div>
+    </div>
+</body>
+    </div>
+    <script>
+    const questions = [
+    {
+        question: "What does * do when used with a pointer in C?",
+        options: ["Creates a pointer", "Gets the address", "Gets the value at the address", "Deletes the pointer"],
+        answer: 2
+    },
+    {
+        question: "What is the index of the first element in a C array?",
+        options: ["1", "0", "-1", "Depends on array"],
+        answer: 1
+    },
+    {
+        question: "What does malloc() do?",
+        options: ["Frees memory", "Allocates memory on heap", "Allocates memory on stack", "Copies memory"],
+        answer: 1
+    },
+    {
+        question: "What marks the end of a string in C?",
+        options: ["'\\n'", "' '", "'\\0'", "EOF"],
+        answer: 2
+    },
+    {
+        question: "What is the correct syntax to access a struct field via pointer?",
+        options: ["ptr.field", "ptr->field", "*ptr.field", "&ptr.field"],
+        answer: 1
+    }
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+function loadQuestion() {
+    let q = questions[currentQuestion];
+    document.getElementById("question").innerHTML = 
+        "Q" + (currentQuestion+1) + ": " + q.question;
+    
+    let buttons = document.getElementById("options").getElementsByTagName("button");
+    for (let i = 0; i < 4; i++) {
+        buttons[i].innerHTML = q.options[i];
+    }
+    document.getElementById("feedback").innerHTML = "";
+}
+
+function checkAnswer(selected) {
+    let correct = questions[currentQuestion].answer;
+    if (selected === correct) {
+        score++;
+        document.getElementById("feedback").innerHTML = "Correct!";
+    } else {
+        document.getElementById("feedback").innerHTML = "Wrong! The correct answer is: " + 
+            questions[currentQuestion].options[correct];
+    }
+    document.getElementById("score").innerHTML = "Score: " + score;
+    currentQuestion++;
+    if (currentQuestion < questions.length) {
+        setTimeout(loadQuestion, 1000);
+    } else {
+        setTimeout(showResult, 1000);
+    }
+}
+function showResult(){
+    document.getElementById("quiz-container").innerHTML = "<h1>Quiz Completed!</h1><p>Your final score is: " + score + "/" + questions.length + "</p>"+
+    "<button onclick='restartQuiz()'>Try Again</button>";
+    
+}
+
+loadQuestion();
+
+    </script>
+
+    
+</body>
+</html>
