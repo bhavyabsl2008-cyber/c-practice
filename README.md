@@ -24,5 +24,8 @@ Learning C programming - programs written while studying pointers, functions, an
 - Pointers and memory addresses
 - Pass by value vs pass by reference
 - Functions in C
+  ## Live Apps
+- [CS Quiz App](https://bhavyabsl2008-cyber.github.io/c-practice/quiz.html)
+- [Grade Tracker](https://bhavyabsl2008-cyber.github.io/c-practice/grade_tracker.html)
 
 
